@@ -1,7 +1,29 @@
 const express = require('express');
+const bodyparser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
 
 const port = 8080;  // constant for port number
 const app = express();  // App is an express server
+app.use(bodyparser.json());
+
+const databaseUri = process.env.MONGODB_URL // 'mongodb://localhost:27107';
+const connectOptions = { useUnifiedTopology: true, useNewUriParser: true};
+const mongoClient = new MongoClient(databaseUri, connectOptions);
+let pizzaCollection = null;
+new Promise((resolve, reject) => {
+    mongoClient.connect((err, client) => {
+        if (err) return reject(err);
+        return resolve(client);
+    });
+}).then((client) => {
+    console.log('Connected to database');
+    const db = client.db('learninglunches');
+    pizzaCollection = new PizzaCollection(db);
+}).catch((err) => {
+    console.error('Database connection failed');
+    console.error(err);
+    process.exit(1);
+});
 
 // In-memory database of pizzas, i.e. a constant
 const pizzas = [
