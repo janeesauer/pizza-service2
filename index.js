@@ -1,8 +1,9 @@
 const express = require('express');
 
 const port = 8080;  // constant for port number
-const app = express();
+const app = express();  // App is an express server
 
+// In-memory database of pizzas, i.e. a constant
 const pizzas = [
     {
         id: 1,
@@ -22,6 +23,12 @@ const pizzas = [
         size: "12 inch",
         spicy: false
     }
+    {
+        id: 4,
+        name: "pepperoni",
+        size: "48 inch",
+        spicy: true
+    }
 ];
 
 app.get('/pizzas', (req, resp) => {
@@ -34,7 +41,6 @@ app.get('/pizzas', (req, resp) => {
     // Return the pizzas collected
     resp.send(pizzas);
 });
-
 
 app.get('/pizzas/*', (req, resp) => {
     // Get the id from the URL path
