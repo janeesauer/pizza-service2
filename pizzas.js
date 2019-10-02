@@ -16,13 +16,13 @@ const pizzas = [
         name: "meteor",
         size: "48 inch",
         spicy: false
-    }
+    },
     {
         id: 3,
         name: "hawaiian",
         size: "12 inch",
         spicy: false
-    }
+    },
     {
         id: 4,
         name: "pepperoni",
